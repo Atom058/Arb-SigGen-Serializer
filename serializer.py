@@ -17,7 +17,7 @@
 # 
 # Because of this, there is a inherent relationship between the selected the frequency / data length and baud rate. To compensate for this, the baud rate is converted to a equivalent frequency + data length as input.
 
-# In[45]:
+# In[54]:
 
 
 # Switching this to 'True' will enable Notebook outputs. 
@@ -36,7 +36,7 @@ if dev_mode:
     print (dev_args)
 
 
-# In[46]:
+# In[55]:
 
 
 import argparse
@@ -389,18 +389,24 @@ if f_b != l_b and slew_rate > 0:
 # ## Outputs
 # The output is a waveform definition in .csv format, following standard set by EasyWaveX.
 
-# In[52]:
+# In[56]:
 
 
 import csv
 
 file_path = "output.csv"
 
+# 'Amplitude' i twice the maximum swing
+amp_lvl = 2 * max(
+    abs(logic_high_level)
+    , abs(logic_low_level)
+)
+
 header_array = [
     ["data length", f"{ len(points_array) :.0f}"]
     , ["frequency", f"{ frequency :.6f}"]
-    , ["amp", f"{ abs(logic_high_level - logic_low_level) :.6f}"]
-    , ["offset", f"{ abs(logic_high_level - logic_low_level) / 2 :.6f}"]
+    , ["amp", f"{ amp_lvl :.6f}"]
+    , ["offset", f"{0:.6f}"]
     , ["phase", f"{0:.6f}"]
 ]
 
